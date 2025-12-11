@@ -1,0 +1,3521 @@
+:root{
+    --bg:#0b111b;
+    --panel:rgba(15,19,28,.86);
+    --panel-strong:rgba(15,19,28,.94);
+
+    --border:rgba(255,255,255,.08);
+    --border-strong:rgba(255,255,255,.12);
+
+    --text:#e9eef7;
+    --muted:#a9b4c3;
+    --accent:#00eaff;
+
+    --green:#22c55e;
+    --red:#ef4444;
+
+    --radius:14px;
+    --radius-sm:10px;
+    --shadow:0 8px 30px rgba(0,0,0,.35);
+    --edw:380px;
+  }
+
+  html,body{
+    margin:0;
+    height:100%;
+    overflow:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  ::selection{background:rgba(127,170,255,.25)}
+  a{color:var(--accent);text-decoration:none}
+
+  /* Loader (initial models picker) */
+  #loader{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:320px;
+    max-width:90vw;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px;
+    z-index:9999;
+    backdrop-filter:saturate(1.2) blur(6px);
+    color:var(--text);
+    font-size:14px;
+    line-height:1.4;
+  }
+  #loader h3{
+    font-size:15px;
+    font-weight:600;
+    margin:0 0 12px 0;
+    color:#dfe7f3;
+  }
+  .file-item{
+    border:1px solid var(--border);
+    background:#0b1624;
+    border-radius:10px;
+    padding:8px 10px;
+    margin-bottom:8px;
+    font-size:13px;
+    line-height:1.35;
+  }
+  .file-item strong{
+    color:#fff;
+    font-weight:600;
+    font-size:13px;
+  }
+  .file-item input[type=file]{
+    width:100%;
+    margin:6px 0;
+    font-size:12px;
+    color:var(--text);
+  }
+  .file-item .status{
+    font-size:12px;
+    color:var(--muted);
+  }
+  #start{
+    width:100%;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--accent);
+    color:#000;
+    font-weight:700;
+    padding:20px 12px;
+    font-size:14px;
+    min-height:36px;
+    cursor:pointer;
+    margin-top:12px;
+  }
+  #start:disabled{
+    filter:grayscale(1) brightness(.4);
+    cursor:not-allowed;
+  }
+  #loader .hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.4;
+  }
+
+  /* Main left panel */
+  .panel{
+    position:fixed;
+    left:16px;
+    top:16px;
+    width:380px;
+    max-height:calc(100vh - 32px);
+    overflow:auto;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:12px;
+    z-index:10;
+    box-shadow:var(--shadow);
+    backdrop-filter:saturate(1.2) blur(6px);
+  }
+
+  .panel-header{
+    display:flex;
+    flex-wrap:wrap;
+    row-gap:8px;
+    align-items:stretch;
+    box-sizing:border-box;
+    max-width:100%;
+    width:100%;
+    overflow-x:hidden;
+  }
+
+  .panel-title{
+    font-size:14px;
+    color:#dfe7f3;
+    font-weight:600;
+  }
+
+  .panel-actions{
+    order:2;
+    width:100%;
+    max-width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:stretch;
+    overflow:hidden;
+  }
+
+  .icon-btn{
+    flex:1 1 0;
+    min-width:0;
+    height:48px;
+    font-size:16px;
+    padding:12px 16px;
+    white-space:nowrap;
+    box-sizing:border-box;
+
+    border:1px solid var(--border);
+    background:#0b1624;
+    color:#d1d7e2;
+    border-radius:10px;
+    cursor:pointer;
+    min-height:36px;
+    line-height:1.1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .icon-btn[disabled]{
+    opacity:.4;
+    cursor:not-allowed;
+  }
+  .icon-btn:hover{
+    border-color:var(--border-strong);
+  }
+
+  /* Make Clear slightly smaller so it fits */
+  #clearBtn.icon-btn{
+    padding:6px 8px;
+    min-width:44px;
+    min-height:34px;
+    font-size:13px;
+  }
+
+  /* small inline hint row in header (we end up hiding it in final styles, but keep base style for structure) */
+  .panel-hint{
+    order:1;
+    width:100%;
+    max-width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:8px;
+    white-space:nowrap;
+    overflow:hidden;
+    font-size:12px;
+    color:#c9d5e7;
+  }
+  .panel-chip{
+    flex:0 1 auto;
+    min-width:0;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:2px 6px;
+
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:#0b1624;
+    box-sizing:border-box;
+    white-space:nowrap;
+  }
+  .panel-chip .k{
+    font-weight:700;
+  }
+
+  .row{margin:10px 0}
+
+  .label{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+
+  button{
+    cursor:pointer;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:#0b1624;
+    color:var(--text);
+    padding:9px 11px;
+    font-size:13px;
+    line-height:1.1;
+    outline:none;
+    transition:.15s ease;
+    min-height:36px;
+  }
+  button.primary{
+    background:var(--accent);
+    border-color:transparent;
+    color:black;
+    font-weight:700;
+  }
+
+  .hint{
+    font-size:12px;
+    color:var(--muted);
+    margin:6px 0 0;
+  }
+
+  /* Block gallery */
+  .gallery{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .card{
+    position:relative;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    background:#0b1624;
+    cursor:pointer;
+  }
+  .card.active{
+    outline:2px solid var(--accent);
+  }
+  .card canvas{
+    display:block;
+    width:100%;
+    height:120px;
+  }
+  .badge{
+    position:absolute;
+    left:8px;
+    top:8px;
+    font-size:11px;
+    color:#cbd5e1;
+    background:rgba(255,255,255,.08);
+    border:1px solid var(--border);
+    padding:2px 6px;
+    border-radius:8px;
+    display: none; /* Скрываем названия кубов */
+  }
+
+  /* Color palette */
+  .palette{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:8px;
+  }
+  .dot{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.25);
+    cursor:pointer;
+  }
+  .dot.active{
+    box-shadow:0 0 0 2px var(--accent) inset;
+  }
+  .swatch{
+    width:25px;
+    height:25px;
+    border-radius:7px;
+    border:1px solid rgba(255,255,255,.2);
+    margin-left:6px;
+    display:inline-block;
+    vertical-align:middle;
+  }
+
+  /* Editor side panel */
+  #editor{
+    position:fixed;
+    top:0;
+    right:calc(-1*var(--edw));
+    width:var(--edw);
+    height:100vh;
+    background:var(--panel-strong);
+    border-left:1px solid var(--border);
+    box-shadow:-12px 0 26px rgba(0,0,0,.35);
+    transition:right .22s ease;
+    z-index:30;
+    padding:14px;
+    backdrop-filter:saturate(1.15) blur(8px);
+    overflow:auto;
+    max-width:100vw;
+  }
+  #editor.open{
+    right:0;
+  }
+  #edOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.35);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s;
+    z-index:20;
+  }
+  body.editor-open #edOverlay{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .group{
+    margin:12px 0;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.03);
+  }
+  .group-title{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+
+  #previewWrap{
+    width:100%;
+    height:260px;
+    background:#0b1624;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+  }
+  #previewHint{
+    position:absolute;
+    left:10px;
+    bottom:10px;
+    font-size:11px;
+    color:#94a3b8;
+    pointer-events:none;
+  }
+
+  /* Face type gallery */
+  .face-type-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .face-type-card {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0b1624;
+    cursor: pointer;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .face-type-card.active {
+    outline: 2px solid var(--accent);
+  }
+  .face-type-card canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .face-type-label {
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    background: rgba(11, 22, 36, 0.8);
+    padding: 2px;
+  }
+
+  /* Blocks counter (top-right-ish bottom) */
+  #stats{
+    position:fixed;
+    right:16px;
+    bottom:64px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:8px 12px;
+    font-size:12px;
+    box-shadow:var(--shadow);
+    backdrop-filter:saturate(1.2) blur(6px);
+    z-index:12;
+  }
+
+  
+  /* Hide facet stats visually (still computed in JS) */
+  #facetStats{    display:none !important;
+}
+
+  /* Export stats button (bottom right, above GLB button) */
+  #exportStatsBtn{
+    position:fixed;
+    right:16px;
+    bottom:64px;
+    z-index: 9;
+    border-radius:999px;
+    padding:8px 12px;
+    font-size:12px;
+    box-shadow:var(--shadow);
+    backdrop-filter:saturate(1.2) blur(6px);
+  }
+
+/* === Help overlay (ensured) === */
+
+/* Export scene button (bottom right) */
+  
+  #exportBtn:hover{
+    filter:brightness(1.1);
+  }
+
+  /* Face stats block (bottom left) */
+  #facetStats{
+    position:fixed;
+    left:16px;
+    bottom:16px;
+    max-width:380px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:10px 12px;
+    font-size:12px;
+    box-shadow:var(--shadow);
+    backdrop-filter:saturate(1.2) blur(6px);
+    transition:transform .3s ease;
+    z-index:11;
+    display:none !important;
+}
+  #facetStats .title{
+    font-weight:700;
+    color:#e6eefb;
+    margin-bottom:6px;
+  }
+  #facetStats .muted{
+    color:var(--muted);
+  }
+  #facetStats .type{
+    margin-top:6px;
+    padding-top:6px;
+    border-top:1px dashed var(--border);
+  }
+  #facetStats .type:first-of-type{
+    border-top:none;
+    padding-top:0;
+    margin-top:0;
+  }
+  #facetStats .type .name{
+    font-weight:600;
+    color:#cfe0ff;
+  }
+  #facetStats .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:4px;
+  }
+  #facetStats .chip{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:4px 8px;
+  }
+  #facetStats .chip .sw{
+    width:12px;
+    height:12px;
+    border-radius:3px;
+    border:1px solid rgba(255,255,255,.25);
+  }
+  #facetStats .sideToggle{
+    position:absolute;
+    right:-12px;
+    bottom:12px;
+    width:24px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-left:none;
+    border-radius:0 10px 10px 0;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:all .3s ease;
+  }
+  #facetStats .sideToggle:hover{
+    background:var(--accent);
+    color:var(--bg);
+  }
+  #facetStats.collapsed{
+    transform:translateX(calc(-100% + 28px));
+  }
+  #facetStats.collapsed #facetBody{
+    display:none;
+  }
+  #facetStats.collapsed .sideToggle{
+    background:var(--accent);
+    color:var(--bg);
+  }
+
+  .hidden-legacy{display:none!important}
+
+  
+  #panelHint{ display: none !important; }
+
+  
+  body.editor-open /* UI tune: editor face color palette & replace button */
+#replaceBtn { width:100%; border-radius:999px; }
+
+/* Block Editor: horizontal color palette under preview */
+#editor #paletteFace{
+  display:flex !important;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:8px 16px;
+  margin-top:8px;
+  background:#000000;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.18);
+}
+
+/* Color dots in Block Editor palette */
+#editor #paletteFace .dot{
+  width:28px;
+  height:28px;
+  margin:0;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.7);
+  box-shadow:0 0 0 1px rgba(0,0,0,0.9);
+}
+
+/* Active state: лёгкое свечение вокруг выбранного цвета */
+#editor #paletteFace .dot.active{
+  box-shadow:0 0 0 2px rgba(255,255,255,0.95);
+}
+
+
+/* Left menu palette spacing and size */
+#palette{ display:flex !important; justify-content:space-between; align-items:center; width:100%; gap:0; }
+#palette .dot{ width:32px !important; height:32px !important; margin:0 !important; }
+
+
+/* Gallery cards: keep canvas centered and sized by card width */
+#gallery .card canvas{ display:block; width:100% !important; height:120px !important; margin:0 auto; }
+
+/* кнопка поворота Zen/2 в превью */
+#gallery .card{
+  position:relative;
+}
+.card-rotate-btn{
+  position:absolute;
+  right:6px;
+  top:6px;
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+  cursor:pointer;
+  font-size:14px;
+  line-height:1;
+  padding:0;
+}
+.card-rotate-btn:hover{
+  background:rgba(0,0,0,0.8);
+}
+.card-rotate-btn-x{
+  right:6px;
+  top:6px;
+}
+
+.card-rotate-btn-z{
+  right:34px;
+  top:6px;
+}
+
+#stats{ display:none !important; }
+
+/* Single counter badge above Export stats button */
+#statsBadge{
+  position:fixed;
+  right:16px;
+  bottom:104px; /* above exportStatsBtn (64px) */
+  z-index:10;
+  padding:6px 10px;
+  border-radius:8px;
+  background:rgba(0,0,0,0.35);
+  color:#fff;
+  font: 500 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+  pointer-events:none;
+}
+
+
+/* === Help overlay v2 (polished) === */
+#helpOverlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.45);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  backdrop-filter: blur(6px) saturate(1.1);
+  z-index:9999;
+}
+.help-open #helpOverlay{ display:flex; }
+#helpCard{
+  position:relative;
+  max-width:760px;
+  width:min(92vw, 760px);
+  max-height:80vh;
+  overflow:auto;
+  background:linear-gradient(180deg, rgba(10,18,32,0.95), rgba(10,18,32,0.92));
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;
+  padding:18px 20px 14px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.45), 0 2px 12px rgba(0,0,0,0.35);
+  color:#e9f0ff;
+}
+#helpCard h2{
+  margin:0 0 12px 0;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:0.2px;
+}
+#helpClose{position:static;flex:0 0 auto;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#e9f0ff;cursor:pointer;transition:transform .06s ease, background .12s ease;}
+#helpClose:hover{ background:rgba(255,255,255,0.09); transform:translateY(-1px); }
+
+.help-list{
+  margin:0; padding:0;
+  display:grid;
+  row-gap:16px;
+}
+.help-row{list-style:none;display:grid;grid-template-columns:max-content 1fr;align-items:center;column-gap:12px;padding:2px 0;}
+.help-row .keys{
+  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+}
+.k{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:26px;
+  padding:0 8px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06);
+  color:#e9f0ff;
+  font-weight:700; font-size:12px; letter-spacing:0.2px;
+  line-height:1;
+}
+.sep{ opacity:.65; padding:0 6px; }
+.help-row .txt{ color:#cfd8ff; font-size:14px; }
+@media (max-width:560px){
+}
+
+
+/* Help cleanup guard: show only header, list and close button */
+#helpCard > :not(h2):not(#helpList):not(#helpClose){ display:none !important; }
+
+
+/* === ICONS FULL-BLEED === */
+.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.help-row .ico{width:auto;height:28px;display:flex;align-items:center;justify-content:center;gap:6px;}
+
+
+/* === ICONS FULL-BLEED (auto) === */
+.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.icon-btn img.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.panel-chip{ display:grid !important; grid-template-columns: 34px 1fr; align-items:center; gap:8px; }
+.panel-chip .ico{width:auto;height:28px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.panel-chip .ico img.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.panel-chip .ico.two img.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.help-row .ico img.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+
+
+.icon-btn .icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.help-row .ico.two{ display:flex; align-items:center; justify-content:center; gap:6px; }.help-row .ico.two img.icon-img{height:28px;width:auto;display:block;object-fit:contain;image-rendering:auto;background:none;}
+.kbd-row{display:inline-flex;gap:6px;vertical-align:middle;}.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;border:1.6px solid var(--border-strong,#244062);border-radius:6px;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.06));font:700 12px/1.0 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;letter-spacing:0.2px;user-select:none;}.kbd-wide{min-width:auto;padding:0 10px;}#helpBtn{ color:#ff3b30; }
+.help-subtitle{margin:8px 0 4px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#9fb3cc;opacity:.9;}
+/* === FIX: make WebGL canvas stick to viewport edges === */
+body > canvas{
+  position:fixed;
+  inset:0;
+  display:block;
+}
+
+
+
+  #helpOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease;
+    z-index:4000;
+  }
+  
+  #helpModal{
+    position:fixed;
+    left:50%;
+    top:50%;
+    right:auto;
+    bottom:auto;
+    display:inline-block;
+    width:max-content;
+    max-width:min(92vw, 480px);
+    max-height:85vh;
+    overflow:auto;
+    background:var(--panel-strong,#0b1624);
+    border:1px solid var(--border-strong,#244062);
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+    padding:32px 28px 28px;
+    z-index:4010;
+    transform:translate(-50%,-52%) scale(.98);
+    opacity:0;
+    pointer-events:none;
+    transition:transform .18s ease,opacity .18s ease;
+  }
+
+  .help-open #helpOverlay{
+    opacity:1;
+    pointer-events:auto;
+  }
+  
+  .help-open #helpModal{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
+
+
+  .help-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin:0 0 16px 0;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--border,#18314a);
+  }
+  .help-title .txt{
+    font-size:14px;
+    color:#dfe7f3;
+    font-weight:600;
+  }
+  .help-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:4px;
+  }
+  .help-row{
+    list-style:none;
+    display:grid;
+    grid-template-columns:max-content 1fr;
+    align-items:center;
+    column-gap:14px;
+    padding:6px 0;
+  }
+  .help-row .ico{width:auto;height:28px;display:flex;align-items:center;justify-content:center;gap:6px;}
+
+
+  
+  .help-actions{
+    display:flex;
+    justify-content:center;
+    padding-top:24px;
+    margin-top:32px;
+  }
+  #helpStart{
+    width:100%;
+    font-weight:800;
+    font-size:18px;
+    line-height:1;
+    padding:18px 22px;
+    border-radius:14px;
+    cursor:pointer;
+  }
+  #helpStart.glow{box-shadow:0 0 0 0 rgba(255,255,255,.35);animation:helpGlow 1.6s ease-in-out infinite}
+
+/* fixed tail */
+.helpPulse { animation: helpGlow 1.8s ease-in-out infinite; }
+
+@keyframes helpGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,.35); }
+  50%  { box-shadow: 0 0 18px 4px rgba(255,255,255,.35); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,.35); }
+}
+
+/* Responsive tuning for Help modal */
+@media (max-width: 768px){
+  #helpModal{
+    top:12px;
+    bottom:12px;
+    left:50%;
+    width:auto;
+    max-width:96vw;
+    max-height:calc(100vh - 24px);
+    padding:20px 18px 18px;
+    transform:translate(-50%,0) scale(1);
+  }
+  .help-title .txt{
+    font-size:13px;
+  }
+  .help-grid{
+    gap:2px;
+  }
+  .help-row{
+    column-gap:10px;
+    padding:4px 0;
+  }
+  .help-row .txt{
+    font-size:13px;
+  }
+  .help-row .ico img.icon-img{
+    height:24px;
+  }
+  .help-subtitle{
+    margin:4px 0 2px;
+  }
+  .help-actions{
+    margin-top:20px;
+    padding-top:18px;
+  }
+  #helpStart{
+    font-size:16px;
+    padding:16px 18px;
+  }
+}
+
+@media (max-width: 520px){
+  #helpModal{
+    top:10px;
+    bottom:10px;
+    max-width:94vw;
+    padding:16px 14px 14px;
+  }
+  .help-title{
+    margin-bottom:12px;
+    padding-bottom:10px;
+  }
+  .help-row{
+    padding:2px 0;
+  }
+  .help-row .txt{
+    font-size:12.5px;
+    line-height:1.25;
+  }
+  .help-row .ico img.icon-img{
+    height:22px;
+  }
+  #helpStart{
+    font-size:15px;
+    padding:14px 16px;
+  }
+}
+
+/* === Use button styles === */
+:root{
+  --use-btn-radius: 999px;
+  --use-btn-pad-y: calc(26px * .9);
+  --use-btn-pad-x: calc(38px * .9);
+  --use-btn-font: inherit;
+  --use-btn-font-size-base: 22px;
+  --use-btn-weight: 800;
+  --use-btn-shadow: 0 10px 34px rgba(0,0,0,.35);
+  --use-btn-glow: 0 0 0 3px rgba(255,255,255,.07), 0 0 20px rgba(0, 180, 255, .85), 0 0 36px rgba(0, 180, 255, .65);
+  --use-btn-glow-strong: 0 0 0 4px rgba(255,255,255,.09), 0 0 26px rgba(0, 200, 255, 1), 0 0 60px rgba(0, 200, 255, .9);
+}
+body.editor-open #saveAsTypeBtn{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1000;
+  padding: var(--use-btn-pad-y) var(--use-btn-pad-x);
+  border-radius: var(--use-btn-radius);
+  font-family: var(--use-btn-font);
+  font-weight: var(--use-btn-weight);
+  font-size: calc(var(--use-btn-font-size-base) * 1.3);
+  letter-spacing: .3px;
+  box-shadow: var(--use-btn-shadow);
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: filter .12s ease, box-shadow .12s ease, transform .12s ease;
+  animation: usePulse 1.05s ease-in-out infinite;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-variant-ligatures: none;
+  background: var(--accent);
+  color: var(--bg);
+  
+}
+body:not(.editor-open) #saveAsTypeBtn{ display:none !important; }
+#saveAsTypeBtn:hover{ filter: brightness(1.08); box-shadow: var(--use-btn-glow-strong); }
+#saveAsTypeBtn:active{ transform: translateY(1px); }
+@keyframes usePulse{
+  0%   { box-shadow: var(--use-btn-shadow), var(--use-btn-glow); }
+  50%  { box-shadow: var(--use-btn-shadow), var(--use-btn-glow-strong); }
+  100% { box-shadow: var(--use-btn-shadow), var(--use-btn-glow); }
+}
+
+
+/* === Teal Uiverse-like overall UI skin === */
+
+/* Override base theme variables to teal / dark-jade palette */
+:root{
+  --bg:#020808;
+  --panel:radial-gradient(circle at 0% 0%, rgba(0,77,64,0.92), rgba(0,25,22,0.98));
+  --panel-strong:radial-gradient(circle at 0% 0%, rgba(0,92,77,0.95), rgba(0,27,24,0.99));
+
+  --border:rgba(255,255,255,.22);
+  --border-strong:rgba(255,255,255,.30);
+
+  --text:#e9fdf8;
+  --muted:#91b3aa;
+  --accent:#26a69a;
+
+  --shadow:0 18px 50px rgba(0,0,0,.75);
+}
+
+/* Global background in style of Uiverse card, but with teal instead of purple */
+body{
+  background:
+    radial-gradient(circle at 0% 0%, #004d40 0, #001a18 40%, #000608 100%);
+  color:var(--text);
+}
+
+/* Main glass cards: left control panel, start loader, help, editor side panel, stats badge */
+.panel,
+#loader,
+#helpModal,
+#editor,
+#facetStats{
+  background:var(--panel);
+  border-radius:18px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+/* Gallery / editor cards, file items, groups, block preview in teal glass style */
+.card,
+.file-item,
+.group,
+#previewWrap,
+.face-type-card{
+  position:relative;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(38,166,154,0.26), rgba(0,22,20,0.98));
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.22);
+  box-shadow:0 10px 26px rgba(0,0,0,0.66);
+  overflow:hidden;
+}
+
+/* Keep model gallery canvases visible and breathing inside card */
+.card canvas,
+#previewWrap canvas,
+.face-type-card canvas{
+  background:transparent;
+}
+
+/* Slightly stronger outline for active cards in teal */
+.card.active,
+.face-type-card.active{
+  outline:2px solid var(--accent);
+}
+
+/* Primary action buttons in Uiverse-style teal pill look.
+   We НЕ трогаем верхние левые иконки (.icon-btn: Clear / Help / Undo / Redo). */
+/* keep small close button compact */
+#helpClose{
+  width:32px;
+  height:32px;
+  padding:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Floating export buttons back to their bottom-right corner positions */
+#exportBtn,
+#exportStatsBtn{
+  position:fixed;
+  right:16px;
+  z-index:9;
+}
+
+#exportBtn{
+  bottom:16px;
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:13px;
+}
+
+#exportStatsBtn{
+  bottom:64px;
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:12px;
+}
+
+/* Hover / active micro-interactions for main teal buttons */
+#helpStart:hover,
+#start:hover,
+#saveAsTypeBtn:hover,
+#replaceBtn:hover,
+#exportBtn:hover,
+#exportStatsBtn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 16px 36px rgba(0,0,0,.8);
+  filter:brightness(1.04);
+}
+
+#helpStart:active,
+#start:active,
+#saveAsTypeBtn:active,
+#replaceBtn:active,
+#exportBtn:active,
+#exportStatsBtn:active{
+  transform:translateY(1px);
+  box-shadow:0 6px 20px rgba(0,0,0,.7);
+}
+
+/* Use button light pulse (reusing previous idea, in teal) */
+@keyframes useTealPulse{
+  0%{
+    box-shadow:0 0 0 0 rgba(38,166,154,.8);
+  }
+  70%{
+    box-shadow:0 0 0 12px rgba(38,166,154,0);
+  }
+  100%{
+    box-shadow:0 0 0 0 rgba(38,166,154,0);
+  }
+}
+#saveAsTypeBtn{
+  animation:useTealPulse 1.6s ease-out infinite;
+}
+
+
+
+/* === Teal polish v2: toolbar icons, cube counter, face labels, Use button === */
+
+/* Top-left toolbar icon buttons (Clear / Help / Undo / Redo) in the same teal glass style */
+.icon-btn{
+  flex:1 1 0;
+  min-width:0;
+  height:48px;
+  min-height:36px;
+  font-size:16px;
+  padding:10px 14px;
+  white-space:nowrap;
+  box-sizing:border-box;
+
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.28);
+  background:
+    radial-gradient(circle 60px at 0% 0%, rgba(38,166,154,0.35), rgba(0,24,21,0.98));
+  color:#e9fdf8;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 28px rgba(0,0,0,0.8);
+}
+.icon-btn:hover{
+  border-color:rgba(255,255,255,0.45);
+  transform:translateY(-1px);
+}
+.icon-btn:active{
+  transform:translateY(1px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.8);
+}
+
+/* Cube counter badge in teal pill style */
+#statsBadge,
+#stats{
+  position:fixed;
+  right:16px;
+  bottom:104px; /* above export stats / glb buttons */
+  z-index:10;
+  padding:6px 14px;
+  border-radius:999px;
+  background:
+    radial-gradient(circle 80px at 0% 0%, rgba(38,166,154,0.55), rgba(0,24,21,0.98));
+  border:1px solid rgba(255,255,255,0.28);
+  color:#e9fdf8;
+  font:500 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+  letter-spacing:0.04em;
+  box-shadow:0 12px 30px rgba(0,0,0,0.85);
+  pointer-events:none;
+}
+#statsBadge span,
+#stats span{
+  font-weight:700;
+  color:var(--accent);
+}
+
+/* Face-type label under preview cards in editor, in teal glass style */
+.face-type-label{
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:10px;
+  color:#c8f5eb;
+  background:linear-gradient(90deg, rgba(0,77,64,0.92), rgba(0,33,28,0.98));
+  padding:3px 4px;
+  border-top:1px solid rgba(255,255,255,0.22);
+  text-shadow:0 0 6px rgba(0,0,0,0.95);
+}
+
+/* Make Use button visually match Start (same gradient / shape, teal pulse only) */
+body.editor-open #saveAsTypeBtn{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:1000;
+}
+body:not(.editor-open) #saveAsTypeBtn{
+  display:none !important;
+}
+#saveAsTypeBtn{
+  border-radius:16px;
+  padding:12px 22px;
+  font-size:18px;
+  font-weight:700;
+  background:radial-gradient(circle 80px at 80% -10%, #e0f2f1, #004d40);
+  color:#ffffff;
+  box-shadow:0 14px 34px rgba(0,0,0,0.85);
+  animation:useTealPulse 1.8s ease-out infinite;
+}
+#saveAsTypeBtn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 18px 40px rgba(0,0,0,0.9);
+}
+#saveAsTypeBtn:active{
+  transform:translateY(1px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.85);
+}
+
+
+
+/* === Teal polish v3: face labels without frame, hard override old Use button bg === */
+
+/* Face labels: only text, no box */
+.face-type-label{
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:10px;
+  color:#c8f5eb;
+  background:none;
+  padding:0;
+  border:none;
+  text-shadow:0 0 6px rgba(0,0,0,0.95);
+}
+
+/* Force Use button to fully match Start, overriding older accent style */
+body.editor-open #saveAsTypeBtn{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:1000;
+  background:radial-gradient(circle 80px at 80% -10%, #e0f2f1, #004d40);
+  color:#ffffff;
+  border:none;
+  box-shadow:0 14px 34px rgba(0,0,0,0.85);
+}
+
+
+
+/* === Project save/load UI === */
+
+#projectPanel{
+  position:fixed;
+  left:16px;
+  bottom:16px;
+  z-index:12;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 8px;
+  background:var(--panel-strong);
+  border-radius:10px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+#projectPanel select{
+  min-width:140px;
+  max-width:220px;
+  padding:4px 8px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#050915;
+  color:var(--text);
+  font-size:12px;
+  outline:none;
+}
+
+#projectPanel select:disabled{
+  opacity:.6;
+  cursor:default;
+}
+
+#projectPanel .project-btn{
+  flex:0 0 auto;
+  height:32px;
+  padding:4px 10px;
+  font-size:12px;
+}
+
+/* Modal for project name */
+
+#projectModal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+}
+
+#projectModal.active{
+  display:block;
+}
+
+#projectModal .project-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+}
+
+#projectModal .project-modal-window{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  min-width:360px;
+  max-width:320px;
+  padding:14px 16px 12px;
+  background:var(--panel-strong);
+  border-radius:14px;
+  border:1px solid var(--border-strong);
+  box-shadow:var(--shadow);
+}
+
+#projectModal .project-modal-header{
+  font-size:14px;
+  font-weight:500;
+  margin-bottom:8px;
+}
+
+#projectModal .project-modal-body input{
+  width:100%;
+  padding:6px 8px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#050915;
+  color:var(--text);
+  font-size:13px;
+  outline:none;
+}
+
+#projectModal .project-modal-body input::placeholder{
+  color:var(--muted);
+}
+
+#projectModal .project-modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:10px;
+}
+
+#projectModal .project-btn{
+  height:32px;
+  padding:4px 12px;
+  font-size:12px;
+}
+
+
+/* === Global fullscreen loader (void cubes) === */
+#globalLoader{
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none; /* по умолчанию скрыт, показываем через showLoader() */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 0% 0%, #004d40 0, #000810 55%, #000000 100%);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.loader-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .legos {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Базовый “void-куб” вместо LEGO */
+    .lego {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      transform: rotate(-23deg);
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 0% 0%, #3fe9ff33 0, transparent 50%),
+        radial-gradient(circle at 30% 20%, #26a69a, #004d40 60%, #001615 100%);
+      box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+    }
+
+    /* Внутренняя “выемка” void-куба */
+    .lego::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 14px;
+      border: 2px solid rgba(0, 0, 0, 0.65);
+      box-shadow:
+        inset 0 0 16px rgba(0, 0, 0, 0.85),
+        0 0 18px rgba(0, 255, 200, 0.25);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.7), transparent 60%);
+    }
+
+    /* Если потом захочешь рендером/PNG:
+       просто раскомментируй и укажи путь к картинке, а фон/::before можно удалить.
+    .lego {
+      background-image: url("void-cube.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .lego::before { content: none; }
+    */
+
+    /* Позиции и анимации — взяты из твоего LEGO-кода,
+       меняем только визуал, путь движения остаётся тем же. */
+
+    .blue {
+      top: calc(50% - 15px);
+      left: calc(50% - 140px);
+      z-index: 1;
+      animation: blue-move 10s infinite linear;
+    }
+
+    .red {
+      top: calc(50% - 134px);
+      left: calc(50% - 78px);
+      z-index: 2;
+      animation: red-move 10s infinite linear;
+    }
+
+    .yellow {
+      top: calc(50% - 202px);
+      left: calc(50% - 140px);
+      z-index: 3;
+      animation: yellow-move 10s infinite linear;
+    }
+
+    /* Можно чуть варьнуть оттенок через фильтр, чтобы “кубы” отличались */
+    .blue  { filter: hue-rotate(0deg); }
+    .red   { filter: hue-rotate(40deg); }
+    .yellow{ filter: hue-rotate(80deg); }
+
+    /* === Анимации (как в твоём коде) === */
+
+    @keyframes blue-move {
+      0% {
+        top: calc(50% - 15px);
+        left: calc(50% - 140px);
+        z-index: 1;
+      }
+      3.334% {
+        top: calc(50% + 100px);
+      }
+      6.668% {
+        left: calc(50% + 180px);
+      }
+      10% {
+        left: calc(50% + 180px);
+        top: calc(50% - 290px);
+      }
+      13.336% {
+        top: calc(50% - 290px);
+        left: calc(50% - 78px);
+        z-index: 3;
+      }
+      16.67% {
+        top: calc(50% - 202px);
+        left: calc(50% - 78px);
+        z-index: 3;
+      }
+      33.337% {
+        top: calc(50% - 134px);
+        left: calc(50% - 78px);
+        z-index: 2;
+      }
+      50% {
+        top: calc(50% - 15px);
+        left: calc(50% - 78px);
+        z-index: 1;
+      }
+      53.334% {
+        top: calc(50% + 100px);
+      }
+      56.668% {
+        left: calc(50% - 400px);
+      }
+      60% {
+        left: calc(50% - 200px);
+        top: calc(50% - 290px);
+      }
+      63.336% {
+        top: calc(50% - 290px);
+        left: calc(50% - 140px);
+        z-index: 3;
+      }
+      66.68% {
+        top: calc(50% - 202px);
+        left: calc(50% - 140px);
+        z-index: 3;
+      }
+      83.35% {
+        top: calc(50% - 83px);
+        left: calc(50% - 137px);
+        z-index: 2;
+      }
+    }
+
+    @keyframes red-move {
+      0% {
+        top: calc(50% - 134px);
+        left: calc(50% - 78px);
+        z-index: 2;
+      }
+      16.67% {
+        top: calc(50% - 15px);
+        left: calc(50% - 78px);
+        z-index: 1;
+      }
+      20% {
+        top: calc(50% + 100px);
+      }
+      23.338% {
+        left: calc(50% - 400px);
+      }
+      26.672% {
+        left: calc(50% - 200px);
+        top: calc(50% - 290px);
+      }
+      30% {
+        top: calc(50% - 290px);
+        left: calc(50% - 140px);
+        z-index: 3;
+      }
+      33.337% {
+        top: calc(50% - 202px);
+        left: calc(50% - 140px);
+        z-index: 3;
+      }
+      50% {
+        top: calc(50% - 83px);
+        left: calc(50% - 137px);
+        z-index: 2;
+      }
+      66.68% {
+        top: calc(50% - 15px);
+        left: calc(50% - 140px);
+        z-index: 1;
+      }
+      70.014% {
+        top: calc(50% + 100px);
+      }
+      73.348% {
+        left: calc(50% + 168px);
+      }
+      76.68% {
+        left: calc(50% + 168px);
+        top: calc(50% - 290px);
+      }
+      80.016% {
+        top: calc(50% - 290px);
+        left: calc(50% - 78px);
+        z-index: 3;
+      }
+      83.35% {
+        top: calc(50% - 202px);
+        left: calc(50% - 78px);
+        z-index: 3;
+      }
+    }
+
+    @keyframes yellow-move {
+      0% {
+        top: calc(50% - 202px);
+        left: calc(50% - 140px);
+        z-index: 3;
+      }
+      16.67% {
+        top: calc(50% - 83px);
+        left: calc(50% - 137px);
+        z-index: 2;
+      }
+      33.337% {
+        top: calc(50% - 15px);
+        left: calc(50% - 140px);
+        z-index: 1;
+      }
+      36.671% {
+        top: calc(50% + 100px);
+      }
+      40% {
+        left: calc(50% + 168px);
+      }
+      43.339% {
+        left: calc(50% + 168px);
+        top: calc(50% - 290px);
+      }
+      46.673% {
+        top: calc(50% - 290px);
+        left: calc(50% - 78px);
+        z-index: 3;
+      }
+      50% {
+        top: calc(50% - 202px);
+        left: calc(50% - 78px);
+        z-index: 3;
+      }
+      66.68% {
+        top: calc(50% - 134px);
+        left: calc(50% - 78px);
+        z-index: 2;
+      }
+      83.35% {
+        top: calc(50% - 15px);
+        left: calc(50% - 78px);
+        z-index: 1;
+      }
+      86.684% {
+        top: calc(50% + 100px);
+      }
+      90.018% {
+        left: calc(50% - 400px);
+      }
+      93.352% {
+        left: calc(50% - 200px);
+        top: calc(50% - 290px);
+        z-index: 1;
+      }
+      96.686% {
+        top: calc(50% - 290px);
+        left: calc(50% - 140px);
+        z-index: 3;
+      }
+    }
+
+    /* Подпись внизу — опционально */
+    .loader-label {
+      position: absolute;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      color: #c8f5eb;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+  
+
+
+
+/* === Fine-tune left toolbar: help at bottom, palette to the side (desktop) === */
+
+/* Panel as positioning context for Help */
+#ui.panel{
+  position:relative;
+  padding-bottom:46px; /* space for Help pill */
+}
+
+/* Help button pinned to very bottom of panel */
+#helpBtn{
+  position:absolute !important;
+  left:14px;
+  bottom:12px;
+  height:26px;
+  padding:0 12px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(17,24,39,0.95);
+  border:1px solid rgba(148,163,184,0.5);
+  color:#e5e7eb;
+}
+#helpBtn svg{
+  width:16px;
+  height:16px;
+}
+#helpBtn::after{
+  content:'Help';
+  margin-left:6px;
+  font-size:12px;
+}
+
+/* === App header & HUD (top right) === */
+#appHeader{
+  position:fixed;
+  top:24px;
+  left: -40px;     /* было 20px – двигаем весь хедер левее */
+  right:20px;
+  z-index:40;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  pointer-events:none;
+}
+#appHeader > *{
+  pointer-events:auto;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  flex-shrink:0;
+}
+
+.brand-word-accent{
+  opacity:.85;
+  font-weight:400;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-left:auto;
+}
+
+.hud-bar{
+  display:flex;
+  align-items:center;
+  background:rgba(0,0,0,0.9);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.18);
+  padding:8px 14px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.7);
+}
+.hud-btn{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 14px;
+  border:none;
+  border-radius:12px;
+  background:transparent;
+  color:#e5e7eb;
+  font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+}
+.hud-btn:hover{
+  background:rgba(148,163,184,0.24);
+}
+.hud-icon{
+  font-size:16px;
+  line-height:1;
+}
+
+.hud-sep{
+  width:2px;
+  height:22px;
+  margin:0 10px;
+  background:rgba(255, 255, 255, 0.527);
+}
+
+.hud-pill{
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+  font-size:13px;
+  color:#e5e7eb;
+}
+.hud-pill-count span:first-child{
+  font-weight:600;
+}
+.hud-pill-caption{
+  opacity:.75;
+}
+.hud-pill-price{
+  font-weight:600;
+}
+
+.nav-toggle{
+  width:34px;
+  height:34px;
+  border-radius:0;
+  border:none;
+  background:transparent;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  cursor:pointer;
+  padding:0;
+}
+.nav-toggle span{
+  width:19px;  /* +~20% ширина */
+  height:3px;  /* чуть толще линию */
+  border-radius:999px;
+  background:#e5e7eb;
+}
+
+/* Slide-out nav */
+#navOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .16s ease;
+  z-index:29;
+}
+#sideNav{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width: min(480px, 100vw);
+  max-width: 100vw;
+  height:100vh;
+  background:rgba(0,0,0,0.96);
+  color:#f9fafb;
+  padding:24px 24px 32px;
+  box-shadow:-24px 0 40px rgba(0,0,0,0.7);
+  transition:right .2s ease;
+  z-index:30;
+  display:flex;
+  flex-direction:column;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.sideNav-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.nav-hud-bar{
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+}
+.nav-hud-btn{
+  padding:0 12px 0 0;
+}
+.nav-hud-pill{
+  font-size:14px;
+}
+#navHudCnt,
+#navHudPrice{
+  font-weight:600;
+}
+
+.nav-close{
+  border:none;
+  background:transparent;
+  color:#f9fafb;
+  font-size:22px;
+  width:32px;
+  height:32px;
+  cursor:pointer;
+  margin-left:auto;
+}
+.sideNav-list{
+  list-style:none;
+  margin: 100px 0 0 0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  font-size:20px;
+  letter-spacing:0.02em;
+  text-transform:none;
+}
+
+body.nav-open #navOverlay{
+  opacity:1;
+  pointer-events:auto;
+}
+body.nav-open #sideNav{
+  right:0;
+}
+
+/* Hide old floating stats badge; keep export buttons visible */
+#statsBadge{
+  display:none;
+}
+#projectPanel{
+  position:fixed;
+  left:-9999px;
+}
+
+/* === Left cubik toolbar (reference-style) === */
+#ui.panel{
+  position:fixed;
+  left:24px;
+  top:90px;
+  width:360px;
+  max-height:calc(100vh - 120px);
+  overflow:visible;
+  background:rgba(0,0,0,0.96);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.08);
+  padding:14px 12px 18px;
+  box-shadow:0 22px 50px rgba(0,0,0,0.9);
+}
+
+/* top actions row */
+#ui .panel-actions{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:8px;
+  margin-bottom:10px;
+}
+#ui .panel-actions .icon-btn{
+  flex:0 0 auto;
+  width:32px;
+  height:32px;
+  padding:0;
+  border-radius:999px;
+}
+
+/* Help pill at bottom of panel */
+#ui .panel-header{
+  position:relative;
+  padding-bottom:36px;
+}
+#helpBtn{
+  position:absolute;
+  left:12px;
+  bottom:0;
+  height:24px;
+  padding:0 10px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(17,24,39,0.95);
+  border:1px solid rgba(148,163,184,0.6);
+  font-size:12px;
+}
+
+/* Slots + palette row */
+#ui .row{
+  display:flex;
+  align-items:stretch;
+  gap:10px;
+  margin-top:6px;
+}
+#ui .gallery{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#ui .gallery .card{
+  background:#0f172a;
+  border:1px solid rgba(45, 46, 48, 0.25);
+  border-radius:16px;
+  overflow:hidden;
+}
+
+/* Number badge 1..4 */
+#ui .badge{
+  position:absolute;
+  left:10px;
+  top:10px;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:6px;
+  background:#facc15;
+  color:#000;
+  font-size:12px;
+  font-weight:600;
+}
+
+/* palette column */
+#ui .palette{
+  flex:0 0 32px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+#ui .palette .dot{
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.7);
+}
+#ui .palette .dot.active{
+  box-shadow:0 0 0 2px rgba(56,189,248,1) inset;
+}
+
+/* status text at bottom */
+#status.hint{
+  margin-top:10px;
+  font-size:11px;
+}
+
+@media (max-width: 900px){
+  #appHeader{
+    top:10px;
+    left:12px;
+    right:12px;
+  }
+  .hud-bar{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:14px;
+    justify-content:space-between;
+  }
+  #ui.panel{
+    top:72px;
+    left:12px;
+  }
+}
+
+@media (max-width: 520px){
+  .hud-label{
+    display:none;
+  }
+  .hud-sep{
+    margin:0 6px;
+  }
+}
+
+
+/* === FINAL OVERRIDES: match black CubikOne UI exactly === */
+
+/* Left toolbar panel: fixed black column */
+#ui.panel{
+  position:fixed;
+  left:24px;
+  top:60px;
+  width:180px;
+  max-height:calc(100vh - 130px);
+  padding:14px 12px 18px;
+  background:rgba(0,0,0,0.96);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 22px 50px rgba(0,0,0,0.9);
+  overflow:visible;
+}
+
+/* hide original hint strip */
+#ui .panel-hint{
+  display:none;
+}
+
+/* header actions row */
+#ui .panel-header{
+  position:relative;
+  padding-bottom:34px; /* reserve room for Help pill */
+}
+#ui .panel-actions{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:8px;
+  margin-bottom:10px;
+}
+#ui .panel-actions .icon-btn{
+  width:32px;
+  height:32px;
+  border-radius:999px;
+  padding:0;
+  border:1px solid rgba(148,163,184,0.5);
+  background:rgba(15,23,42,0.95);
+}
+
+/* Help button pinned at bottom of panel */
+#helpBtn{
+  position:absolute;
+  left:12px;
+  bottom:0;
+  height:24px;
+  padding:0 12px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(17,24,39,0.95);
+  border:1px solid rgba(148,163,184,0.8);
+  font-size:12px;
+  color:#e5e7eb;
+}
+#helpBtn svg{
+  width:14px;
+  height:14px;
+}
+#helpBtn::after{
+  content:"Help";
+}
+
+/* main row: four slots + palette */
+#ui .row{
+  margin-top:6px;
+}
+#ui .row:first-of-type{
+  display:flex;
+  align-items:stretch;
+  gap:10px;
+}
+
+/* 2nd row container for palette doesn't take extra height */
+#ui .row:last-of-type{
+  height:0;
+  margin-top:0;
+}
+
+/* slots stack */
+#ui .gallery{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#ui .gallery .card{
+  position:relative;
+  background:#090909;
+  border-radius:16px;
+  border:1px solid rgba(32, 32, 32, 0.45);
+  overflow:hidden;
+}
+#ui .gallery .card canvas{
+  display:block;
+  width:100%;
+  height:96px;
+}
+#ui .gallery .card.active{
+  outline:none;  /* убираем старую зелёную рамку */
+
+  /* тонкий контур, чтобы слот читался */
+  border:2px solid rgba(223, 250, 21, 0.9);
+
+  /* ЗАЛИВКА всего прямоугольника мягким жёлтым фоном за кубом */
+  background:rgba(216, 239, 71, 0.1);
+
+  /* лёгкое внутреннее усиление по краям, чтобы не было плоского цвета */
+  box-shadow:
+    0 0 0 1px rgba(250,204,21,0.12) inset,
+    0 0 24px rgba(0,0,0,0.8);
+}
+
+
+
+
+/* yellow index badge 1..4 */
+#ui .badge{
+  position:absolute;
+  left:10px;
+  top:10px;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:6px;
+  background:#facc15;
+  color:#000;
+  font-size:12px;
+  font-weight:600;
+}
+#ui .card.active .badge{
+  background:#bbf7d0;
+}
+
+/* status text small and near bottom */
+#status.hint{
+  margin-top:10px;
+  font-size:11px;
+}
+
+/* HUD bar remains as previously defined; make sure it is solid black like reference */
+.hud-bar{
+  background:rgba(0,0,0,0.96);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.18);
+}
+
+
+/* Logo image in header */
+.brand-logo{
+  height:32px;
+  width:auto;
+  max-width:none;
+  display:block;
+  object-fit:contain;
+}
+
+
+/* HUD icons as images */
+.hud-icon img{
+  display:block;
+  width:18px;
+  height:18px;
+  object-fit:contain;
+  pointer-events:none;
+}
+
+
+/* Make logo + HUD icons white on dark header */
+.brand-logo,
+.hud-icon img{
+  filter: brightness(0) invert(1);
+}
+
+
+/* Override for full-color CUBIK.ONE logo */
+.brand-logo{
+  height:32px;
+  width:auto;
+  max-width:none;
+  display:block;
+  object-fit:contain;
+  filter:none !important; /* cancel global invert for icons */
+}\n\n
+/* White transparent logo */
+.brand-logo{
+  height:32px;
+  width:auto;
+  max-width:none;
+  display:block;
+  object-fit:contain;
+  filter:none !important;
+}
+
+
+/* === Final layout: Help centered at bottom near "Ready." === */
+#ui.panel{
+  position:fixed; /* containing block */
+}
+
+#status.hint{
+  position:absolute;
+  left:16px;
+  bottom:14px;
+  margin:0;
+  font-size:11px;
+}
+
+#helpBtn{
+  position:absolute !important;
+  left:50%;
+  bottom:10px;
+  transform:translateX(-50%);
+}
+
+
+/* === FINAL layout for left toolbar (desktop + mobile) === */
+
+/* Панель под шапкой, высота по контенту, без обрезки слотов */
+#ui.panel{
+  position:fixed;
+  left:16px;
+  top:76px;           /* под логотипом */
+  bottom:auto;
+  max-height:calc(100vh - 180px);
+}
+
+/* Делаем запас места под Help/Ready внизу */
+#ui .gallery{
+  padding-bottom:60px;
+}
+
+/* Ready. — внизу слева панели */
+#status.hint{
+  position:absolute;
+  left:18px;
+  bottom:14px;
+  margin:0;
+  font-size:11px;
+}
+
+/* Help — по центру под всеми слотами, чуть выше низа панели */
+#helpBtn{
+  position:absolute !important;
+  left:50%;
+  bottom:10px;
+  transform:translateX(-50%);
+}
+
+
+
+/* === Clean palette + panel block === */
+
+/* row with slots (already styled above), we just ensure standard flow */
+#ui .row{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* row with palette under slots */
+#ui .row.row-palette{
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  margin-top:8px;
+  margin-bottom:80px; /* space above Help button */
+}
+
+/* palette lives inside row as horizontal set of dots */
+#ui .row.row-palette #palette{
+  position:static;
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 8px;
+  border:none;
+  background:transparent;
+  box-shadow:none;
+}
+
+/* hide toolbar toggle and status text (legacy) */
+#toolbarToggle{
+  display:none !important;
+}
+#status{
+  display:none !important;
+}
+
+/* keep panel fade */
+#ui.panel{
+  transition:opacity 0.18s ease;
+}
+
+
+/* === Final UI overrides: palette, badges, status === */
+
+/* row with palette under slots — отдельный вертикальный блок справа */
+#ui .row.row-palette{
+  position:absolute;
+  top:240px;           /* вертикальное положение палитры */
+  right:-54px;         /* слегка выступает за правый край панели */
+  width:64px;
+  height:320px;        /* высота чёрного прямоугольника с цветами */
+  margin:0;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#ui .row.row-palette #palette{
+  position:static;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-around;
+  padding:12px 8px;
+  background:rgba(0,0,0,0.96);
+  border-radius:0 18px 18px 0;
+  border-width:1px 1px 1px 0;              /* нет рамки слева */
+  border-style:solid;
+  border-color:rgba(255,255,255,0.10);
+  box-shadow:0 18px 38px rgba(0,0,0,0.9);
+}
+
+
+/* кружки внутри вертикальной палитры */
+#ui .row.row-palette #palette .dot{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  margin:4px 0;
+  border:1px solid rgba(255,255,255,0.88);
+  box-shadow:0 0 0 1px rgba(0,0,0,0.9);
+  cursor:pointer;
+  transition:transform 0.12s ease, box-shadow 0.12s ease;
+}
+#ui .row.row-palette #palette .dot:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 0 2px rgba(148,163,184,0.9);
+}
+#ui .row.row-palette #palette .dot.active{
+  box-shadow:0 0 0 2px rgba(56,189,248,1);
+}
+
+/* hide legacy controls / text */
+#toolbarToggle{ display:none !important; }
+#status{ display:none !important; }
+
+/* hide numeric badges on slots */
+#gallery .badge{ display:none !important; }
+
+
+/* === FINAL TOOLBAR + PALETTE TWEAKS (compact icons row, red Help on the right) === */
+
+/* Panel header actions: single row, compact gaps */
+#ui .panel-header .panel-actions{
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  align-items:center;
+  width:100%;
+  max-width:100%;
+  gap:6px;
+  overflow:hidden;
+}
+
+/* Generic toolbar icon buttons: small circles */
+#ui .panel-header .panel-actions .icon-btn{
+  flex:0 0 auto;
+  width:28px;
+  height:28px;
+  padding:0;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(148,163,184,0.45);
+  background:rgba(15,23,42,0.96);
+}
+
+/* SVG inside icon buttons scales properly */
+#ui .panel-header .panel-actions .icon-btn svg{
+  width:16px;
+  height:16px;
+}
+
+/* Order of toolbar buttons: Clear, Undo, Redo, Play, Record, Help */
+#clearBtn{ order:1; }
+
+/* Help button: same size as others, no border, red icon, inline on the right */
+#helpBtn{
+  position:static !important;
+  left:auto !important;
+  bottom:auto !important;
+  transform:none !important;
+  margin:0;
+  border:none !important;
+  background:transparent !important;
+  color:#ff3b30 !important; /* red question mark */
+}
+
+/* Slightly stronger red for the question mark paths if needed */
+#helpBtn svg{
+  width:16px;
+  height:16px;
+  stroke:currentColor;
+  fill:currentColor;
+}
+
+/* Palette: less empty space at the bottom, closer to cubes */
+#ui .gallery{
+  padding-bottom:10px;
+}
+
+#ui .row.row-palette{
+  margin-top:6px;
+  margin-bottom:6px;
+}
+
+
+/* === FINAL PATCH: center CUBIK.ONE logo over cube panel & header Help icon === */
+
+/* Centered brand logo above left cube panel */
+#appHeader .brand{
+  position:fixed;
+  top:40px;          /* above the panel (#ui.panel has top:90px) */
+  left:24px;         /* same as #ui.panel left */
+  width:360px;       /* same as panel width */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  z-index:30;
+}
+
+#appHeader .brand .brand-logo{
+  width:120px;       /* requested logo width */
+  height:auto;
+  max-width:100%;
+  display:block;
+  object-fit:contain;
+}
+
+/* Help button as red question icon on the right of the toolbar row */
+#ui .panel-header .panel-actions{
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  align-items:center;
+  width:100%;
+  max-width:100%;
+  gap:6px;
+}
+
+#ui .panel-header .panel-actions .icon-btn{
+  flex:0 0 auto;
+}
+
+/* explicit order to keep Help at the far right */
+#clearBtn{ order:1; }
+#undoBtn{ order:2; }
+#redoBtn{ order:3; }
+
+
+#helpBtn{ order:6; }
+
+/* reset default bottom placement and make Help look like an icon only */
+#helpBtn{
+  position:static !important;
+  left:auto !important;
+  bottom:auto !important;
+  transform:none !important;
+  margin:0;
+  padding:0;
+  width:28px;
+  height:28px;
+  border-radius:999px;
+  border:none;
+  background:transparent;
+  color:#ff3b30;         /* red question mark */
+}
+
+#helpBtn::after{
+  content:"";            /* remove 'Help' text label */
+  margin:0;
+}
+
+#helpBtn svg{
+  width:16px;
+  height:16px;
+  stroke:currentColor;
+  fill:currentColor;
+}
+
+
+/* === FINAL OVERRIDE: enlarge top HUD menu by ~20% === */
+.hud-bar{
+  border-radius:22px;
+  padding:10px 18px;
+}
+.hud-btn{
+  gap:7px;
+  padding:10px 18px;
+  border-radius:14px;
+  font-size:15px;
+}
+.hud-icon{
+  font-size:19px;
+}
+.hud-sep{
+  height:26px;
+  margin:0 12px;
+}
+.hud-pill{
+  font-size:15px;
+}
+.nav-toggle{
+  width:40px;
+  height:40px;
+}
+.nav-toggle span{
+  width:19px;
+  height:2px;
+}
+
+/* === Responsive: left panel, logo, gallery for tablets/phones === */
+@media (max-width: 768px){
+  #appHeader .brand{
+    position:fixed;
+    top:14px;
+    left:12px;
+    right:12px;
+    width:auto;
+    justify-content:center;
+  }
+  #appHeader .brand .brand-logo{
+    width:100px;
+  }
+  #ui.panel{
+    left:12px;
+    right:12px;
+    width:auto;
+    max-width:none;
+    top:84px;
+    max-height:calc(100vh - 110px);
+    padding:12px 12px 14px;
+  }
+  #ui .panel-header{
+    padding-bottom:28px;
+  }
+  #ui .panel-header .panel-actions{
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  #ui .row:first-of-type{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  #ui .gallery{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:8px;
+  }
+  #ui .gallery .card canvas{
+    height:88px;
+  }
+  #ui .palette{
+    flex:1 1 100%;
+    flex-direction:row;
+    justify-content:flex-start;
+    gap:8px;
+    padding:4px 0 0;
+  }
+}
+
+@media (max-width: 540px){
+  #appHeader .brand{
+    top:12px;
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
+    width:180px;
+  }
+  #ui.panel{
+    top:88px;
+    left:10px;
+    right:10px;
+    padding:10px 10px 12px;
+  }
+  #ui .panel-actions{
+    gap:6px;
+  }
+  #ui .row:first-of-type{
+    gap:6px;
+  }
+  #ui .gallery{
+    grid-template-columns:1fr;
+  }
+  #ui .gallery .card canvas{
+    height:80px;
+  }
+  #ui .palette{
+    gap:6px;
+  }
+}
+
+/* === SUPER FINAL: toolbar + logo (icons row + centered brand) === */
+
+/* Верхняя панель иконок в одну аккуратную строку */
+#ui .panel-header{
+  padding-bottom: 0;
+  margin-bottom: 12px;
+}
+
+#ui .panel-header .panel-actions{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Все кнопки-иконки одинакового размера */
+#ui .panel-header .panel-actions .icon-btn{
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.55);
+  background: #050814;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Картинки / SVG внутри */
+#ui .panel-header .panel-actions .icon-btn .icon-img,
+#ui .panel-header .panel-actions .icon-btn svg{
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/* Текстовые иконки (▶ и ●) по центру и нужного размера */
+#ui .panel-header .panel-actions .icon-btn .icon-label{
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Порядок кнопок слева направо */
+#clearBtn{ order: 1; }
+#undoBtn{ order: 2; }
+#redoBtn{ order: 3; }
+
+
+#helpBtn{ order: 6; }
+
+/* Help: такой же круг, но прозрачный фон и красный знак вопроса */
+#helpBtn{
+  position: static !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin: 0;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+#helpBtn svg{
+  width: 22px;
+  height: 22px;
+  color: #ff3b30;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+#helpBtn::after{
+  content: "";
+}
+
+/* Логотип CUBIK.ONE строго по центру над панелью */
+#appHeader .brand{
+  position: fixed;
+  top: 30px;
+  left: 16px;      /* тот же отступ, что у #ui.panel */
+  width: 260px;    /* та же ширина, что у панели */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 30;
+}
+
+#appHeader .brand .brand-logo{
+  width: 140px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === UNIFIED TOOLBAR ICONS: same size, no borders, clean row === */
+
+/* Row of icons with equal gaps, all fit in panel width */
+#ui .panel-header .panel-actions{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+}
+
+/* Base style for all icon buttons (including Help) */
+#ui .panel-header .panel-actions .icon-btn{
+  flex:0 0 auto;
+  width:30px;
+  height:30px;
+  padding:0;
+  border:none !important;
+  border-radius:999px;
+  background:transparent !important;
+  box-shadow:none !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+}
+
+/* SVG / image icons inside buttons */
+#ui .panel-header .panel-actions .icon-btn .icon-img,
+#ui .panel-header .panel-actions .icon-btn svg{
+  width:18px;
+  height:18px;
+  display:block;
+}
+
+/* Text icons (▶ ●) */
+#ui .panel-header .panel-actions .icon-btn .icon-label{
+  font-size:16px;
+  line-height:1;
+}
+
+/* Help button: exactly same size as others, just red icon */
+#helpBtn{
+  width:30px !important;
+  height:30px !important;
+  margin:0;
+  padding:0;
+  background:transparent !important;
+  border:none !important;
+  color:#ff3b30 !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#helpBtn svg{
+  width:24px !important;
+  height:24px !important;
+  stroke:currentColor;
+  fill:currentColor;
+}
+
+/* === Black editor + help on top of toolbar_unified version === */
+
+/* Editor side panel: pure black, same style as side menus */
+#editor{
+  background:#000000 !important;
+  border-left:1px solid rgba(255,255,255,0.18) !important;
+  box-shadow:-18px 0 40px rgba(0,0,0,0.9) !important;
+}
+
+/* Editor groups/cards */
+#editor .group{
+  background:#000000 !important;
+  border:1px solid rgba(255,255,255,0.16) !important;
+}
+
+/* Preview area inside editor */
+#editor #previewWrap{
+  background:#000000 !important;
+  border-radius:16px !important;
+  border:1px solid rgba(255,255,255,0.16) !important;
+}
+
+/* Face type cards */
+#editor .face-type-card{
+  background:#000000 !important;
+  border:1px solid rgba(255,255,255,0.18) !important;
+}
+
+#editor .face-type-card.active{
+  outline:2px solid #ffffff !important;
+}
+
+#editor .face-type-label{
+  background:none !important;
+  color:#f5f5f5 !important;
+}
+
+/* Palette row in editor */
+#editor .palette-row,
+#editor .color-row,
+#editor .palette{
+  background:#000000; /* как у #ui.panel */
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.18) !important;
+}
+
+/* Editor header typography */
+#editor .panel-header h3{
+  margin:0;
+  font-family:"Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.16em;
+  font-weight:600;
+  font-size:15px;
+  color:#ffffff !important;
+}
+
+#editor .hint{
+  color:#b3b3b3 !important;
+}
+
+/* Help overlay + modal: same black style */
+#helpOverlay{
+  background:rgba(0,0,0,0.65) !important;
+  -webkit-backdrop-filter:blur(8px) saturate(1.05);
+  backdrop-filter:blur(8px) saturate(1.05);
+}
+
+#helpModal,
+#helpCard{
+  background:#000000 !important;
+  border:1px solid rgba(255,255,255,0.18) !important;
+  color:#f5f5f5 !important;
+}
+
+#helpModal .help-title,
+#helpCard .help-title{
+  font-family:"Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.16em;
+  font-weight:600;
+  font-size:15px;
+  color:#ffffff !important;
+  border-bottom:1px solid rgba(255,255,255,0.18);
+}
+
+#helpModal .help-row .txt,
+#helpCard .help-row .txt{
+  color:#d4d4d4 !important;
+}
+
+#helpModal .k,
+#helpCard .k{
+  background:#050505 !important;
+  border:1px solid rgba(255,255,255,0.2) !important;
+  color:#ffffff !important;
+}
+
+/* Start & Replace facets buttons: black with white outline */
+#replaceBtn,
+#helpStart{
+  background:#000000 !important;
+  color:#ffffff !important;
+  border-radius:999px !important;
+  border:1px solid rgba(255,255,255,0.9) !important;
+  box-shadow:0 10px 34px rgba(0,0,0,.6) !important;
+}
+
+#replaceBtn:hover,
+#helpStart:hover{
+  background:#050505 !important;
+}
+
+#replaceBtn:active,
+#helpStart:active{
+  background:#0a0a0a !important;
+  box-shadow:0 6px 20px rgba(0,0,0,.8) !important;
+}
+
+/* === Slightly larger toolbar icons (+10%), still one row === */
+#ui .panel-header .panel-actions{
+  gap:4px; /* чуть меньше расстояние, чтобы всё влезло */
+}
+
+#ui .panel-header .panel-actions .icon-btn{
+  width:33px !important;
+  height:33px !important;
+}
+
+#helpBtn{
+  width:33px !important;
+  height:33px !important;
+}
+
+
+/* === Side nav items hover like reference screenshot === */
+.sideNav-list li{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(148,163,184,0.25);
+  cursor: pointer;
+  color: #f9fafb;
+}
+
+.sideNav-list li:last-child{
+  border-bottom: none;
+}
+
+/* right arrow on each item */
+.sideNav-list li::after{
+  content: "\2192";           /* → */
+  font-size: 18px;
+  color: #6b7280;
+  -webkit-text-fill-color: currentColor;
+  margin-left: 12px;
+  opacity: .7;
+  transition:
+    transform .16s ease,
+    color .16s ease,
+    opacity .16s ease;
+}
+
+/* gradient text highlight on hover */
+.sideNav-list li:hover{
+  background: linear-gradient(90deg,#fb7185,#22c55e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.sideNav-list li:hover::after{
+  color: #f9fafb;
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+
+/* Icons row: +10% size, keep in single line */
+#ui .panel-header .panel-actions {
+  flex-wrap: nowrap;
+}
+
+#ui .panel-header .panel-actions .icon-btn {
+  transform: scale(1.1);
+  transform-origin: center;
+}
+
+/* Increase only Help icon (question mark) */
+#ui .panel-header .panel-actions #helpBtn {
+  transform: scale(1.3);
+  transform-origin: center;
+}
+
+/* Side menu: white text by default, gradient only on hover */
+.sideNav-list li,
+.sideNav-list li a {
+  color: #f9fafb;
+}
+
+.sideNav-list li:hover,
+.sideNav-list li:hover a {
+  background: linear-gradient(90deg,#fb7185,#22c55e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* === Right slide-out menu with gradient hover like screenshot === */
+.sideNav-list{
+  margin:40px 0 0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  font-size:20px;
+  letter-spacing:0.02em;
+}
+
+.sideNav-list li{
+  margin:0;
+}
+
+.sideNav-list a{
+  display:block;
+  padding:2px 0;
+  text-decoration:none;
+  color:#f9fafb;
+  font-weight:500;
+}
+
+.sideNav-list li:last-child a{
+  border-bottom:none;
+}
+
+/* градиент при наведении – как на скрине */
+.sideNav-list a:hover,
+.sideNav-list a:focus-visible{
+  background:linear-gradient(90deg,#fb7185,#f97316,#22c55e);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+
+/* активный пункт (Home) с тем же градиентом без наведения */
+.sideNav-list a.is-active{
+  background:linear-gradient(90deg,#fb7185,#f97316,#22c55e);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+
+
+/* Hamburger-to-X behavior disabled */
+
+/* === Help button under the lower cubik block === */
+#ui .row-help{
+  margin-top:10px;
+  justify-content: flex-start;
+padding-left: 35px;
+}
+
+#ui .row-help #helpBtn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.55);
+  background:rgba(0,0,0,0.88);
+  width:auto !important;
+  height:auto !important;
+  transform:none !important;
+}
+
+#ui .row-help #helpBtn .icon-img,
+#ui .row-help #helpBtn svg{
+  width:18px !important;
+  height:18px !important;
+}
+
+#ui .row-help #helpBtn .help-label{
+  font-size:13px;
+  line-height:1;
+  color:#e5e7eb;
+}
+/* Тонкая подстройка позиции логотипа CUBIK.ONE */
+#appHeader .brand{
+  position: relative;
+}
+
+#appHeader .brand .brand-logo{
+  margin-left: -10px !important;  /* то, что мы уже делали для смещения влево */
+  margin-top: -78px !important;    /* поднимаем логотип вверх, подбери значение под себя */
+}
+#sideNav .sideNav-list{
+  margin-top: 80px !important; /* подбери значение под себя */
+}
+
+
+/* === Final overrides: helpClose icon & HUD hiding in editor === */
+
+/* Close button in help overlay: compact black circular icon */
+#helpClose{
+  position:static;
+  flex:0 0 auto;
+  width:28px;
+  height:28px;
+  margin-left:auto;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.9);
+  border:1px solid rgba(255,255,255,0.12);
+  color:#e9f0ff;
+  cursor:pointer;
+  transition:transform .06s ease, background .12s ease;
+}
+#helpClose:hover{
+  background:rgba(255,255,255,0.08);
+  transform:translateY(-1px);
+}
+
+/* When editor is open, hide top HUD (Load / Save / price, burger) and bottom project panel */
+body.editor-open #hudBar,
+body.editor-open #navToggle{
+  display:none !important;
+}
+
+body.editor-open #projectPanel{
+  display:none !important;
+}
+
+/* === Burger toggler → X when menu is open === */
+.nav-toggle{
+  border:none;
+  background:transparent;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  cursor:pointer;
+  padding:0;
+  width:24px;
+  height:20px;
+  position:relative;
+}
+.nav-toggle span{
+  width:19px;
+  height:3px;
+  border-radius:999px;
+  background:#e5e7eb;
+  transition:transform .18s ease, opacity .18s ease;
+}
+
+body.nav-open .nav-toggle span{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform-origin:center;
+}
+body.nav-open .nav-toggle span:nth-child(1){
+  transform:translate(-50%,-50%) rotate(45deg);
+}
+body.nav-open .nav-toggle span:nth-child(2){
+  opacity:0;
+}
+body.nav-open .nav-toggle span:nth-child(3){
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
+
+.nav-close{
+  display: none !important;
+}
+
+/* === Responsive adjustments for side navigation === */
+@media screen and (max-width: 600px) {
+  #sideNav {
+    width: 100vw;
+    max-width: 100vw;
+    padding: 20px 16px 24px;
+  }
+  
+  .sideNav-list {
+    font-size: 18px;
+    margin-top: 60px !important;
+  }
+  
+  .sideNav-list li {
+    padding: 14px 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #sideNav {
+    padding: 16px 12px 20px;
+  }
+  
+  .sideNav-list {
+    font-size: 16px;
+    margin-top: 50px !important;
+    gap: 12px;
+  }
+  
+  .sideNav-list li {
+    padding: 12px 0;
+  }
+}
+
+/* Ensure menu doesn't overflow on any screen */
+@media screen and (max-height: 500px) {
+  #sideNav {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  
+  .sideNav-list {
+    margin-top: 40px !important;
+    gap: 8px;
+  }
+  
+  .sideNav-list li {
+    padding: 10px 0;
+  }
+}
+
+/* === Responsive Help Modal === */
+@media screen and (max-width: 520px) {
+  #helpModal {
+    max-width: 95vw;
+    padding: 20px 18px 24px;
+    border-radius: 14px;
+  }
+  
+  .help-title {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+  
+  .help-row {
+    column-gap: 10px;
+    padding: 5px 0;
+  }
+  
+  .help-row .txt {
+    font-size: 13px;
+  }
+  
+  .k {
+    height: 24px;
+    padding: 0 6px;
+    font-size: 11px;
+  }
+  
+  .help-actions {
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+  
+  #helpStart {
+    padding: 16px 18px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  #helpModal {
+    padding: 16px 14px 20px;
+  }
+  
+  .help-row .txt {
+    font-size: 12px;
+  }
+  
+  .k {
+    height: 22px;
+    padding: 0 5px;
+    font-size: 10px;
+  }
+  
+  #helpStart {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  #helpModal {
+    max-height: 90vh;
+    padding: 16px 18px 20px;
+  }
+  
+  .help-row {
+    padding: 4px 0;
+  }
+  
+  .help-actions {
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+  
+  #helpStart {
+    padding: 14px 18px;
+  }
+}
+/* Компактный режим help-меню */
+#helpCard{
+  /* чуть меньше общий "воздух" внутри карточки */
+  padding:12px 16px 10px;
+  max-height:70vh; /* было 80vh — окно ниже */
+}
+
+/* расстояние между строчками-строками */
+.help-list{
+  row-gap:8px;       /* было 8px */
+}
+
+/* внутренняя высота каждой строки */
+.help-row{
+  padding: 2px;         /* было 2px 0 / 4px 0 в медиаправилах */
+}
+
+/* текст справа — более компактный */
+.help-row .txt{
+  font-size:14px;    /* было 14px */
+  line-height:1.2;
+}
+
+/* "клавиши" делаем пониже и поуже */
+.k{
+  height:22px;       /* было 26px */
+  padding:0 6px;     /* было 0 8px */
+  font-size:11px;
+}
+
+/* подзаголовки разделов — меньше отступы */
+.help-subtitle{
+  margin:6px 0 4px;  /* было 8px 0 4px */
+}
+
+/* зона сверху от кнопки Start — тоже компактнее */
+.help-actions{
+  margin-top:12px;   /* было 16–32px */
+  padding-top:8px;   /* было 12–24px */
+}
+
+
+/* Collapse toggle for left toolbar (all viewports) */
+/* Toolbar collapse toggle - sits next to color palette */
+#ui .row.row-palette{
+  position:relative;
+}
+
+#uiSideToggle{
+  position:absolute;
+  left:-18px;
+  top:-60px; /* place just above palette row */
+  transform:none;
+
+  width:28px;
+  height:56px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#050708;          /* solid black like panel */
+  border:1px solid #050708;
+  border-right:none;
+  border-radius:12px 0 0 12px;
+  box-shadow:var(--shadow);
+
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+  color:#ffffff;               /* white arrow */
+  padding:0;
+  z-index:40;
+}
+
+
+/* Collapsed state: narrow toolbar that only shows palette */
+#ui.collapsed{
+  width:72px;
+  padding-right:10px;
+}
+
+#ui.collapsed .panel-header,
+#ui.collapsed .row.row-main,
+#ui.collapsed .row.row-help{
+  display:none;
+}
+
+#ui.collapsed .row.row-palette{
+  margin-top:4px;
+  margin-bottom:4px;
+}
+
+#ui.collapsed .row.row-palette #palette{
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  padding:0 4px;
+  gap:10px;
+}
+
+
+/* === FINAL OVERRIDE: palette + collapse arrow layout === */
+
+#ui{
+  position:relative;
+}
+
+/* container with arrow + palette, attached to right side of main panel */
+#ui .row.row-palette{
+  position:absolute;
+  top:260px;
+  right:-74px;
+  width:74px;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  gap:8px;
+}
+
+/* arrow pill just to the left of palette */
+#uiSideToggle{
+  width:28px;
+  height:56px;
+  align-self:flex-start;
+  margin-left:-14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#050708;
+  border:1px solid #050708;
+  border-right:none;
+  border-radius:12px 0 0 12px;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+  color:#ffffff;
+  padding:0;
+  z-index:40;
+}
+
+/* vertical palette block */
+#ui .row.row-palette #palette{
+  width:64px;
+  height:320px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-around;
+  padding:12px 8px;
+  background:rgba(0,0,0,0.96);
+  border-radius:0 18px 18px 0;
+  border-width:1px 1px 1px 0;
+  border-style:solid;
+  border-color:rgba(255,255,255,0.10);
+  box-shadow:0 18px 38px rgba(0,0,0,0.9);
+}
+
+/* dots in vertical palette */
+#ui .row.row-palette #palette .dot{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  margin:4px 0;
+  border:1px solid rgba(255,255,255,0.88);
+  box-shadow:0 0 0 1px rgba(0,0,0,0.9);
+  cursor:pointer;
+  transition:transform 0.12s ease, box-shadow 0.12s ease;
+}
+#ui .row.row-palette #palette .dot:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 0 2px rgba(148,163,184,0.9);
+}
+#ui .row.row-palette #palette .dot.active{
+  box-shadow:0 0 0 2px rgba(56,189,248,1);
+}
+
+/* collapsed: only narrow panel with palette and arrow */
+#ui.collapsed{
+  width:78px;
+  padding:0;
+}
+#ui.collapsed .panel-header,
+#ui.collapsed .row.row-main,
+#ui.collapsed .row.row-help{
+  display:none;
+}
+#ui.collapsed .row.row-palette{
+  top:200px;
+  right:0;
+}
+
+/* Export buttons: black style like main control buttons */
+#exportBtn,
+#exportStatsBtn{
+  background:#000000 !important;
+  color:#ffffff !important;
+  border-radius:999px !important;
+  border:1px solid rgba(255,255,255,0.9) !important;
+  box-shadow:0 10px 34px rgba(0,0,0,.6) !important;
+  font-weight:700;
+}
+
+#recordTimelapseBtn{ order:4; }
